@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1556850919123456}
+  m_IsPrefabParent: 1
+--- !u!1 &1556850919123456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4695758536498014}
+  - component: {fileID: 114274889988048662}
+  - component: {fileID: 114116333538075184}
+  - component: {fileID: 114517147385912060}
+  - component: {fileID: 114912872245919892}
+  - component: {fileID: 114226858837815818}
+  m_Layer: 0
+  m_Name: LogManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4695758536498014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.04, y: 1, z: 5.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114116333538075184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1083e0c7c9f1a2d4eabc61fa99978682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugSections: 0
+  drawPath: 0
+  drawPathBySection: 0
+  highlightActiveCube: 0
+  displayActionDistribution: 0
+  drawColor: {r: 1, g: 0, b: 0, a: 0.078431375}
+  activeCubeColor: {r: 1, g: 1, b: 0, a: 0.078431375}
+  boundingBoxSize: {x: 40, y: 20, z: 150}
+  boundingBoxPivot: {x: -5, y: -5, z: -10}
+  boundingBoxColor: {r: 0, g: 1, b: 0, a: 0.39215687}
+  output: {fileID: 0}
+  selectedLog: {fileID: 0}
+--- !u!114 &114226858837815818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb5aca4cd83034e9d65a5d7b92e189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffRange:
+    minLimit: 0
+    maxLimit: 10
+    pivotMin: 0
+    pivotMax: 10
+    diff: 1
+  agentIsOnline: 0
+  tableAsset: {fileID: 0}
+  logBatch:
+    mapName: 
+    table: []
+--- !u!114 &114274889988048662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cadaf480029b1b49a1a7aa84b8386f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoving: 0
+  unitSize: 10
+  player: {fileID: 0}
+  playerHead: {fileID: 0}
+  rightHand: {fileID: 0}
+  leftHand: {fileID: 0}
+  pointerRight: {fileID: 0}
+  pointerLeft: {fileID: 0}
+  boundingBoxSize: {x: 0, y: 0, z: 0}
+  boundingBoxPivot: {x: 0, y: 0, z: 0}
+--- !u!114 &114517147385912060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5bbb9d63d460e94f99e5984c57539cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loggerTick: 0.2
+  currentAction: 0
+--- !u!114 &114912872245919892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556850919123456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3ea3b369249dd24989832835bcee257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
