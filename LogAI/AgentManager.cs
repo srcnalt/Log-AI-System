@@ -70,26 +70,27 @@ public class AgentManager : MonoBehaviour
         move = MoveCoroutine(logLines, previousLog);
         StartCoroutine(move);
     }
-
+    
     private IEnumerator MoveCoroutine(List<LogLine> logLines, LogLine previousLog)
     {
+    
         // isMoving is checked in calling component to wait for the next movement desicion
         isMoving = true;
 
         //for continuity previous between log sections, log line's time is set to oldTime  
         float oldTime = previousLog.time;
-
+        
         // invoked is used for calling action method only once
         bool invoked = false;
-
+        
         // body parts of the agent are linearly interpolated to the each next log line
         // during the time difference of current and previous log line
-        for (int i = 0; i < logLines.Count; i++)
+        foreach (LogLine line in logLines)
         {
-            if (i == 0) continue;
+            if (logLines.IndexOf(line) == 0) continue;
 
             float time = 0;
-            float step = logLines[0].time - oldTime;
+            float step = line.time - oldTime;
 
             while (time <= step)
             {
@@ -97,37 +98,37 @@ public class AgentManager : MonoBehaviour
 
                 //if action is not idle the controller will look at the target point at that frame
                 //and the other controller keep interpolating its position and rotation
-                if (logLines[0].action == ActionEnum.Idle)
+                if (line.targetPoint.Vector3 != Vector3.zero)
                 {
-                    if (logLines[0].action == ActionEnum.PressLeft)
+                    if (line.action == ActionEnum.PressLeft)
                     {
-                        leftHand.LookAt(logLines[0].targetPoint.Vector3);
+                        leftHand.LookAt(line.targetPoint.Vector3);
                         leftHand.Rotate(Vector3.right, weaponAngle);
-                        rightHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.rightHandRotation.Vector3), Quaternion.Euler(logLines[0].rightHandRotation.Vector3), time / step);
+                        rightHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.rightHandRotation.Vector3), Quaternion.Euler(line.rightHandRotation.Vector3), time / step);
                     }
                     else
                     {
-                        rightHand.LookAt(logLines[0].targetPoint.Vector3);
+                        rightHand.LookAt(line.targetPoint.Vector3);
                         rightHand.Rotate(Vector3.right, weaponAngle);
-                        leftHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.leftHandRotation.Vector3), Quaternion.Euler(logLines[0].leftHandRotation.Vector3), time / step);
+                        leftHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.leftHandRotation.Vector3), Quaternion.Euler(line.leftHandRotation.Vector3), time / step);
                     }
                 }
                 else
                 {
-                    leftHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.leftHandRotation.Vector3), Quaternion.Euler(logLines[0].leftHandRotation.Vector3), time / step);
-                    rightHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.rightHandRotation.Vector3), Quaternion.Euler(logLines[0].rightHandRotation.Vector3), time / step);
+                    leftHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.leftHandRotation.Vector3), Quaternion.Euler(line.leftHandRotation.Vector3), time / step);
+                    rightHand.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.rightHandRotation.Vector3), Quaternion.Euler(line.rightHandRotation.Vector3), time / step);
                 }
 
-                leftHand.position = Vector3.Lerp(player.position - previousLog.leftHandPosition.Vector3, player.position - logLines[0].leftHandPosition.Vector3, time / step);
-                rightHand.position = Vector3.Lerp(player.position - previousLog.rightHandPosition.Vector3, player.position - logLines[0].rightHandPosition.Vector3, time / step);
+                leftHand.position = Vector3.Lerp(player.position - previousLog.leftHandPosition.Vector3, player.position - line.leftHandPosition.Vector3, time / step);
+                rightHand.position = Vector3.Lerp(player.position - previousLog.rightHandPosition.Vector3, player.position - line.rightHandPosition.Vector3, time / step);
 
-                playerHead.position = Vector3.Lerp(player.position - previousLog.cameraPosition.Vector3, player.position - logLines[0].cameraPosition.Vector3, time / step);
-                playerHead.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.cameraRotation.Vector3), Quaternion.Euler(logLines[0].cameraRotation.Vector3), time / step);
+                playerHead.position = Vector3.Lerp(player.position - previousLog.cameraPosition.Vector3, player.position - line.cameraPosition.Vector3, time / step);
+                playerHead.rotation = Quaternion.Lerp(Quaternion.Euler(previousLog.cameraRotation.Vector3), Quaternion.Euler(line.cameraRotation.Vector3), time / step);
                 
                 //call the action
-                if (logLines[0].action != ActionEnum.Idle && !invoked)
+                if (line.action != ActionEnum.Idle && !invoked)
                 {
-                    actionList[logLines[0].action.ToString()].Invoke();
+                    actionList[line.action.ToString()].Invoke();
                     invoked = true;
                 }
 
@@ -136,8 +137,8 @@ public class AgentManager : MonoBehaviour
 
             //values set for next iteration
             invoked = false;
-            oldTime = logLines[0].time;
-            previousLog = logLines[0];
+            oldTime = line.time;
+            previousLog = line;
 
             yield return null;
         }
