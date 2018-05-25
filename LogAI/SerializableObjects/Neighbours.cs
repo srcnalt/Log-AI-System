@@ -54,13 +54,20 @@ public class Neighbours
     //depending on how close the agent is to each neighbour sector a dictionary is created
     public void CreateDistanceMap(Point3 sector)
     {
-        Point3 center = new Point3(AgentManager.instance.unitSize / 2, AgentManager.instance.unitSize / 2, AgentManager.instance.unitSize / 2);
+        Point3 center = new Point3(AgentManager.instance.unitSize / 2f, AgentManager.instance.unitSize / 2f, AgentManager.instance.unitSize / 2f);
 
         for (int i = 0; i < length; i++)
         {
-            float distance = Vector3.Distance(AgentManager.instance.playerHead.position, (sector + members[i] + center).Vector3);
-
-            distanceMap.Add(distance, members[i]);
+            //players position in the boinding box
+            Vector3 relativePlayerPosition = AgentManager.instance.playerHead.position - AgentManager.instance.boundingBoxPivot;
+            
+            //center of ith neighbour
+            Vector3 neighbourCenter = ((sector + members[i]) * AgentManager.instance.unitSize + center).Vector3;
+            
+            //distance between player and the center of ith neighbour sector
+            float distance = Vector3.Distance(relativePlayerPosition, neighbourCenter);
+            
+            distanceMap.Add(distance, members[i] + sector);
         }
 
         keys = distanceMap.Keys.ToArray();
